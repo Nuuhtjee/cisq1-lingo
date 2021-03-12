@@ -2,8 +2,8 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
@@ -11,6 +11,7 @@ public class Feedback {
 
     private final String attempt;
     private final List<Mark> marks;
+    private List<String> hint = new ArrayList<>();
 
     public Feedback(String attempt, List<Mark> marks) throws InvalidFeedbackException {
         if (attempt.length() != marks.size()){
@@ -29,25 +30,35 @@ public class Feedback {
         return marks.stream().noneMatch(mark -> mark == INVALID);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Feedback feedback = (Feedback) o;
-        return attempt.equals(feedback.attempt) &&
-                marks.equals(feedback.marks);
+    public List<String> giveHint(String wordToGuess, List<String> previousHint) throws InvalidFeedbackException{
+
+        String[] listLetters = wordToGuess.toUpperCase().split("");
+        List<String> result = new ArrayList<>();
+        if (previousHint.size() != wordToGuess.length()){
+            throw new InvalidFeedbackException();
+        }
+        for (int i = 0; i < listLetters.length; i++){
+            if (marks.get(i) == CORRECT){
+                result.add(listLetters[i]);
+            }
+            else if (marks.get(i) != CORRECT){
+                result.add(previousHint.get(i));
+            }
+            else{
+                result.add(".");
+            }
+
+        }
+        this.hint = result;
+
+        return result;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(attempt, marks);
+    public List<String> getHint() {
+        return hint;
     }
 
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "attempt='" + attempt + '\'' +
-                ", marks=" + marks +
-                '}';
+    public String getAttempt() {
+        return attempt;
     }
 }
