@@ -36,12 +36,14 @@ public class LingoGame {
 
     public void makeAttempt(String attempt) throws InvalidRoundException {
         if (gameStatus == PLAYING) {
-            List<Round> playableRounds = rounds.stream().filter(round -> !round.checkRound()).collect(Collectors.toList()); //Searches for a round object thats still ongoing
+            List<Round> playableRounds = rounds.stream().filter(round -> !round.isRoundDone()).collect(Collectors.toList()); //Searches for a round object thats still ongoing
 
             playableRounds.stream().findFirst().ifPresent(round -> {
                 round.makeAttempt(attempt);
                 isPlayerEliminated();
-                progress.updateProgress(rounds.size(), round.giveHint(), round.getAttempts().size());
+                if (round.wordGuessed()){
+                    progress.updateProgress(rounds.size(), round.giveHint(), round.getAttempts().size());
+                }
             });
         }
         else{
@@ -74,7 +76,7 @@ public class LingoGame {
            return true;
        }
        else{
-           if (rounds.isEmpty() || rounds.get(rounds.size() - 1).checkRound()){ //Gets last round in arraylist and checks if round is done
+           if (rounds.isEmpty() || rounds.get(rounds.size() - 1).isRoundDone()){ //Gets last round in arraylist and checks if round is done
                gameStatus = WAITING_FOR_ROUND;
            }
            else{

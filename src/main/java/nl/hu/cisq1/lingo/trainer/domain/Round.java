@@ -116,6 +116,10 @@ public class Round {
         return attempts.stream().anyMatch(Feedback::isWordGuessed) || attempts.size() > 4;
     }
 
+    public boolean wordGuessed(){
+        return attempts.stream().anyMatch(Feedback::isWordGuessed);
+    }
+
     public boolean isPlayerEliminated(){
         return attempts.size() == 5 && attempts.stream().noneMatch(Feedback::isWordGuessed);
     }
@@ -127,5 +131,9 @@ public class Round {
 
     public String getWordToGuess() {
         return wordToGuess;
+    }
+
+    public boolean isRoundDone() {
+        return roundDone;
     }
 }

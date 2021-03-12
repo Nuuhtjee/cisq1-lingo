@@ -123,7 +123,6 @@ class LingoGameTest {
     @DisplayName("Checks if player is eliminated without there being a round")
     void isPlayerEliminatedWithoutRound(){
         LingoGame lingoGame = new LingoGame();
-        System.out.println(lingoGame.isPlayerEliminated());
         assertFalse(lingoGame.isPlayerEliminated());
     }
 
