@@ -2,7 +2,6 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAttemptException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -107,7 +106,6 @@ public class Round {
         }
         else{
             roundDone = checkRound();
-            System.out.println(roundDone);
             throw new InvalidAttemptException();
         }
     }

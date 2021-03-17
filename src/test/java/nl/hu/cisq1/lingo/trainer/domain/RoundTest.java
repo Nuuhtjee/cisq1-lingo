@@ -57,7 +57,7 @@ class RoundTest {
 
     @Test
     @DisplayName("Guess is invalid if there are too many attempts")
-    void tooManyAttemps(){
+    void tooManyAttempts(){
         Round round = new Round("Appel");
 
         round.playRound("Aaien");

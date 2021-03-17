@@ -99,6 +99,14 @@ class LingoGameTest {
 
     }
 
+    @Test
+    @DisplayName("Provides next word length without any rounds")
+    void provideNextWordLengthNoRound(){
+        LingoGame lingoGame = new LingoGame();
+
+        assertEquals(5,lingoGame.provideNextWordLength());
+    }
+
     @ParameterizedTest
     @MethodSource("provideEliminationExamples")
     @DisplayName("Checks if player is eliminated")
@@ -126,6 +134,18 @@ class LingoGameTest {
         assertFalse(lingoGame.isPlayerEliminated());
     }
 
-
-
+//    @Test
+//    @DisplayName("Progress should not be updated if word is not guessed")
+//    void showProgress(){
+//        LingoGame lingoGame = new LingoGame();
+//
+//        Progress oldProgress = lingoGame.showProgress();
+//
+//        lingoGame.startNewRound("APPEL");
+//
+//        lingoGame.makeAttempt("PAARD");
+//
+//        assertEquals(lingoGame.showProgress(),oldProgress);
+//
+//    }
 }

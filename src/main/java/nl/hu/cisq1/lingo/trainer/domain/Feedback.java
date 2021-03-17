@@ -31,7 +31,6 @@ public class Feedback {
     }
 
     public List<String> giveHint(String wordToGuess, List<String> previousHint) throws InvalidFeedbackException{
-
         String[] listLetters = wordToGuess.toUpperCase().split("");
         List<String> result = new ArrayList<>();
         if (previousHint.size() != wordToGuess.length()){
@@ -44,10 +43,6 @@ public class Feedback {
             else if (marks.get(i) != CORRECT){
                 result.add(previousHint.get(i));
             }
-            else{
-                result.add(".");
-            }
-
         }
         this.hint = result;
 

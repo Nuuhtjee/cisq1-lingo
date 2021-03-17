@@ -49,7 +49,6 @@ public class LingoGame {
         else{
                 throw new InvalidRoundException();
             }
-
         }
 
     public int provideNextWordLength(){

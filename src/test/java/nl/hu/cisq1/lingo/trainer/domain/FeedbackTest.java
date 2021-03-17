@@ -18,7 +18,8 @@ class FeedbackTest {
     static Stream<Arguments> provideHintExamples() {
         return Stream.of(
                 Arguments.of("paard", List.of("P",".",".",".","."),List.of(ABSENT,CORRECT,ABSENT,ABSENT,ABSENT),"palet",List.of("P","A",".",".",".")),
-                Arguments.of("hoofd", List.of("H",".",".",".","."),List.of(CORRECT,CORRECT,CORRECT,ABSENT,ABSENT),"horen",List.of("H","O","O",".","."))
+                Arguments.of("hoofd", List.of("H",".",".",".","."),List.of(CORRECT,CORRECT,CORRECT,ABSENT,ABSENT),"horen",List.of("H","O","O",".",".")),
+                Arguments.of("appel",List.of("A",".",".",".","."),List.of(ABSENT,PRESENT,ABSENT,CORRECT,ABSENT),"water",List.of("A",".",".","E","."))
         );
     }
     @Test
@@ -80,6 +81,16 @@ class FeedbackTest {
         List<String> result = feedback.giveHint(woord, previoushint);
 
         assertEquals(expectedHint,result);
+    }
+
+    @Test
+    @DisplayName("Gives invalid hint by using a invalid hint")
+    void giveInvalidHint(){
+
+        Feedback feedback = new Feedback("PAARD",List.of(CORRECT,CORRECT,ABSENT,ABSENT,CORRECT));
+
+        assertThrows(InvalidFeedbackException.class,
+                () -> feedback.giveHint("BAARD",List.of("B")));
     }
 
 }
