@@ -59,8 +59,6 @@ public class LingoGame {
                 List<Mark> marks = round.playRound(attempt);
                 isPlayerEliminated();
                 if (round.wordGuessed()){
-                    System.out.println(attempt);
-                    System.out.println(gameStatus);
                     progress.updateProgress(rounds.size(), round.giveHint(), round.getAttempts().size(),this.gameStatus);
                 }
                 else{
