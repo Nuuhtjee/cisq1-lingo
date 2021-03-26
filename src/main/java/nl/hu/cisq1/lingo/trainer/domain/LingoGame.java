@@ -2,22 +2,37 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static nl.hu.cisq1.lingo.trainer.domain.GameStatus.*;
 
+@Entity
+@Table(name="game")
 public class LingoGame {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private int id;
+
+    @OneToMany
+    @JoinColumn
     private List<Round> rounds = new ArrayList<>();
+
+
+    @Column
+    @Enumerated(EnumType.STRING)
     private GameStatus gameStatus;
+
+    @OneToOne
     private Progress progress;
 
 
     public LingoGame(){
         gameStatus = WAITING_FOR_ROUND;
-        this.progress = new Progress();
+        this.progress = new Progress(this.id);
     }
 
     public List<Round> getRounds() {
@@ -26,8 +41,10 @@ public class LingoGame {
 
     public void startNewRound(String word) throws InvalidRoundException {
         if (gameStatus == WAITING_FOR_ROUND){
-            rounds.add(new Round(word));
+            Round round = new Round(word);
+            rounds.add(round);
             gameStatus = PLAYING;
+            progress.updateProgress(rounds.size(),round.giveHint(),round.getAttempts().size(),gameStatus);
         }
         else{
             throw new InvalidRoundException();
@@ -39,10 +56,16 @@ public class LingoGame {
             List<Round> playableRounds = rounds.stream().filter(round -> !round.isRoundDone()).collect(Collectors.toList()); //Searches for a round object thats still ongoing
 
             playableRounds.stream().findFirst().ifPresent(round -> {
-                round.makeAttempt(attempt);
+                List<Mark> marks = round.playRound(attempt);
                 isPlayerEliminated();
                 if (round.wordGuessed()){
-                    progress.updateProgress(rounds.size(), round.giveHint(), round.getAttempts().size());
+                    System.out.println(attempt);
+                    System.out.println(gameStatus);
+                    progress.updateProgress(rounds.size(), round.giveHint(), round.getAttempts().size(),this.gameStatus);
+                }
+                else{
+                    progress.setHint(round.giveHint());
+                    progress.setMark(marks);
                 }
             });
         }

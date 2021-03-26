@@ -2,15 +2,27 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
+@Entity
 public class Feedback {
 
-    private final String attempt;
-    private final List<Mark> marks;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private int id;
+
+    @Column
+    private  String attempt;
+
+    @Enumerated
+    @ElementCollection(targetClass = Mark.class)
+    private List<Mark> marks;
+
+    @ElementCollection
     private List<String> hint = new ArrayList<>();
 
     public Feedback(String attempt, List<Mark> marks) throws InvalidFeedbackException {
@@ -19,6 +31,10 @@ public class Feedback {
         }
         this.attempt = attempt;
         this.marks = marks;
+    }
+
+    public Feedback(){
+
     }
 
     public boolean isWordGuessed(){

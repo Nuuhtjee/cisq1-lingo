@@ -2,17 +2,26 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAttemptException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 
+@Entity
 public class Round {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private int id;
+
+    @Column
     private String wordToGuess;
     private boolean roundDone;
 
+    @OneToMany
+    @JoinColumn
     private List<Feedback> attempts = new ArrayList<>();
 
     public Round(String wordToGuess){
@@ -20,6 +29,9 @@ public class Round {
         this.roundDone = false;
     }
 
+    public Round(){
+
+    }
 
     public List<Mark> makeAttempt(String attempt) {
 
@@ -85,6 +97,8 @@ public class Round {
             }
         }
 
+        hint = resList;
+
         for (Feedback feedback : attempts) {
             if (attempts.indexOf(feedback) == 0){
                 hint = feedback.giveHint(wordToGuess,resList);
@@ -94,15 +108,19 @@ public class Round {
                 hint = feedback.giveHint(wordToGuess,previousHint);
             }
         }
+        System.out.println(hint);
         return hint;
 
     }
 
 
-    public void playRound(String attempt) throws InvalidAttemptException{
+
+    public List<Mark> playRound(String attempt) throws InvalidAttemptException{
         if (!roundDone && attempts.size() != 5){
-            this.makeAttempt(attempt);
+            List<Mark> marks = this.makeAttempt(attempt);
             roundDone = checkRound();
+            return marks;
+
         }
         else{
             roundDone = checkRound();

@@ -14,8 +14,9 @@ class ProgressTest {
     void updateProgress(){
         Progress progress = new Progress();
 
-        progress.updateProgress(1, List.of("B",".",".",".","."), 3);
+        progress.updateProgress(1, List.of("B",".",".",".","."), 3,GameStatus.PLAYING);
 
+        assertEquals(List.of("B",".",".",".","."),progress.getHint());
         assertEquals(15, progress.getScore());
     }
 
