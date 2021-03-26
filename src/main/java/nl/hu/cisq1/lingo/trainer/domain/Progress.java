@@ -74,13 +74,4 @@ public class Progress {
         return status;
     }
 
-    @Override
-    public String toString() {
-        return "Progress{" +
-                "score=" + score +
-                ", status=" + status +
-                ", hint=" + hint +
-                ", roundNumber=" + roundNumber +
-                '}';
-    }
 }

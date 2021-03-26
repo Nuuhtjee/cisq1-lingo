@@ -108,7 +108,6 @@ public class Round {
                 hint = feedback.giveHint(wordToGuess,previousHint);
             }
         }
-        System.out.println(hint);
         return hint;
 
     }
