@@ -1,7 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.*;
-
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Gamestate;
@@ -23,6 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.PLAYING;
+import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.WAITING_FOR_ROUND;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -77,5 +78,20 @@ class GameServiceIntegrationTest {
 
         assertEquals(progress1.getHint(), hint);
         assertEquals(progress1.getStatus(), gamestate);
+    }
+
+    @Test
+    @DisplayName("Makes an invalid guess on a game")
+    void makeInvalidAttempt(){
+        LingoGame lingoGame = new LingoGame();
+
+        lingoGame.startNewRound("Paard");
+
+        when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(lingoGame));
+
+        Progress progress1 = gameService.makeAttempt(1,"TRAINER");
+
+        assertEquals(progress1.getStatus(), PLAYING);
+        assertEquals(progress1.getMark(), List.of(INVALID,INVALID,INVALID,INVALID,INVALID,INVALID,INVALID));
     }
 }

@@ -1,77 +1,52 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 public class Progress {
 
+    private int gameid;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
 
-    @Column
     private int score;
 
-    @Enumerated(EnumType.STRING)
     private Gamestate status;
 
-    @ElementCollection
     private List<String> hint;
 
-    @ElementCollection
     private List<Mark> mark;
 
     private int roundNumber;
 
-    @Column
-    private int gameid;
-
-    public Progress(int gameid) {
-        this.score = 0;
-        this.hint = new ArrayList<>();
-        this.roundNumber = 0;
+    public Progress(int gameid, int score, Gamestate status, List<String> hint, List<Mark> mark, int roundNumber) {
         this.gameid = gameid;
-        this.mark = new ArrayList<>();
-    }
-
-    public Progress(){
-
-    }
-
-    public void updateProgress(int roundNumber, List<String> hint, int pogingen, Gamestate gamestate){
-        this.roundNumber = roundNumber;
+        this.score = score;
+        this.status = status;
         this.hint = hint;
-        int calcScore = 5 * (5 - pogingen) + 5;
-        this.score += calcScore;
-        this.status = gamestate;
-    }
-
-    public void setHint(List<String> hint){
-        this.hint = hint;
-    }
-
-    public void setMark(List<Mark> mark){
         this.mark = mark;
+        this.roundNumber = roundNumber;
     }
 
+    public int getGameid() {
+        return gameid;
+    }
 
     public int getScore() {
         return score;
-    }
-
-    public int getRoundNumber() {
-        return roundNumber;
-    }
-
-    public List<String> getHint() {
-        return hint;
     }
 
     public Gamestate getStatus() {
         return status;
     }
 
+    public List<String> getHint() {
+        return hint;
+    }
+
+    public List<Mark> getMark() {
+        return mark;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
 }

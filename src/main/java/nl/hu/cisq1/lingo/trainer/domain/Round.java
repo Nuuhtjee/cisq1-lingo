@@ -14,7 +14,7 @@ import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
 @Entity
 public class Round {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Id
     private int id;
 
@@ -89,7 +89,7 @@ public class Round {
 
         String[] word = wordToGuess.split("");
         List<String> resList = new ArrayList<>();
-        List<String> hint = new ArrayList<>();
+        List<String> hint;
 
         for (int i = 0; i < word.length; i++) {
             if (i == 0){

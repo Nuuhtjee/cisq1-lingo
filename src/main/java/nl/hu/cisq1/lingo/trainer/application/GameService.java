@@ -21,17 +21,23 @@ public class GameService {
         this.wordService = wordService;
     }
 
+    public Progress getGame(int id){
+        return createProgress(springGameRepository.findById(id).orElseThrow(NoGameFoundException::new));
+    }
+
     public Progress startNewGame(){
         LingoGame lingoGame = new LingoGame();
 
+        System.out.println("game" + lingoGame.getId());
         int wordLength = lingoGame.provideNextWordLength();
 
         String word = wordService.provideRandomWord(wordLength);
 
         lingoGame.startNewRound(word);
 
+
         springGameRepository.save(lingoGame);
-        return lingoGame.showProgress();
+        return createProgress(lingoGame);
     }
 
     public Progress startNewRound(int gameID){
@@ -42,7 +48,7 @@ public class GameService {
 
         game.startNewRound(word);
         springGameRepository.save(game);
-        return game.showProgress();
+        return createProgress(game);
 
     }
 
@@ -50,7 +56,19 @@ public class GameService {
         LingoGame game = springGameRepository.findById(gameID).orElseThrow(NoGameFoundException::new);
         game.makeAttempt(attempt);
         springGameRepository.save(game);
-        return game.showProgress();
+        return createProgress(game);
+    }
+
+    private Progress createProgress(LingoGame game){
+
+        return new Progress(
+                game.getId(),
+                game.getScore(),
+                game.getGamestate(),
+                game.getLastHint(),
+                game.getLastMark(),
+                game.getRounds().size()
+        );
     }
 
 

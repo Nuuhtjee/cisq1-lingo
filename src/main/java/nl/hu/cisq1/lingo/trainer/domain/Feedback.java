@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.CORRECT;
+import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
 
 @Entity
 public class Feedback {
@@ -71,5 +72,9 @@ public class Feedback {
 
     public String getAttempt() {
         return attempt;
+    }
+
+    public List<Mark> getMarks() {
+        return marks;
     }
 }

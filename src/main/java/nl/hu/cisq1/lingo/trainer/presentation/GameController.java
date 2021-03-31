@@ -15,6 +15,12 @@ public class GameController {
         this.gameService = gameService;
     }
 
+
+    @GetMapping("/{id}")
+    public Progress getGame(@Validated @PathVariable("id") int id){
+        return gameService.getGame(id);
+    }
+
     @PostMapping("/startgame")
     public Progress startNewGame(){
         return gameService.startNewGame();
