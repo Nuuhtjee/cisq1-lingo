@@ -70,10 +70,6 @@ public class Progress {
         return hint;
     }
 
-    public int getGameid() {
-        return gameid;
-    }
-
     public Gamestate getStatus() {
         return status;
     }
