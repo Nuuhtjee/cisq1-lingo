@@ -2,9 +2,9 @@ package nl.hu.cisq1.lingo.trainer.application;
 
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.LingoGame;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
+import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.NoGameFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.PLAYING;
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.WAITING_FOR_ROUND;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate.PLAYING;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate.WAITING_FOR_ROUND;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.INVALID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -76,8 +76,8 @@ class GameServiceIntegrationTest {
 
         Progress progress1 = gameService.makeAttempt(1,attempt);
 
-        assertEquals(progress1.getHint(), hint);
-        assertEquals(progress1.getStatus(), gamestate);
+        assertEquals(hint, progress1.getHint());
+        assertEquals(gamestate, progress1.getStatus());
     }
 
     @Test
@@ -91,7 +91,7 @@ class GameServiceIntegrationTest {
 
         Progress progress1 = gameService.makeAttempt(1,"TRAINER");
 
-        assertEquals(progress1.getStatus(), PLAYING);
-        assertEquals(progress1.getMark(), List.of(INVALID,INVALID,INVALID,INVALID,INVALID,INVALID,INVALID));
+        assertEquals(PLAYING, progress1.getStatus());
+        assertEquals(List.of(INVALID,INVALID,INVALID,INVALID,INVALID,INVALID,INVALID), progress1.getMark());
     }
 }

@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.enums.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAttemptException;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.*;
 
 @Entity
 public class Round {

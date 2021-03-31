@@ -1,13 +1,14 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.enums.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.CORRECT;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.CORRECT;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.INVALID;
 
 @Entity
 public class Feedback {

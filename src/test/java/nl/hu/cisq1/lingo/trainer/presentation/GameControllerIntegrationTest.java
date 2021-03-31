@@ -3,8 +3,8 @@ package nl.hu.cisq1.lingo.trainer.presentation;
 import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.LingoGame;
+import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Import(CiTestConfiguration.class)
 @AutoConfigureMockMvc
-public class GameControllerIntegrationTest {
+class GameControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -65,6 +65,20 @@ public class GameControllerIntegrationTest {
                 .andExpect(jsonPath("$.mark").isArray())
                 .andExpect(jsonPath("$.roundNumber").isNumber())
                 .andExpect(jsonPath("$.roundNumber").value(1));
+    }
+
+    @Test
+    @DisplayName("Get game information")
+    void getGame() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/game/{id}",gameidWithRound);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.score").isNumber())
+                .andExpect(jsonPath("$.hint").isArray())
+                .andExpect(jsonPath("$.mark").isArray())
+                .andExpect(jsonPath("$.roundNumber").isNumber());
     }
 
     @Test

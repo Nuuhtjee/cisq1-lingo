@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.enums.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidFeedbackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FeedbackTest {

@@ -1,9 +1,9 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.LingoGame;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
+import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.NoGameFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.PLAYING;
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.WAITING_FOR_ROUND;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.INVALID;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate.PLAYING;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate.WAITING_FOR_ROUND;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Mark.INVALID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -53,9 +53,9 @@ class GameServiceTest {
 
         Progress progress = gameService.getGame(5);
 
-        assertEquals(progress.getStatus(), PLAYING);
-        assertEquals(progress.getHint(), List.of("A", ".", ".", ".", "."));
-        assertEquals(progress.getMark(), List.of());
+        assertEquals(PLAYING, progress.getStatus());
+        assertEquals(List.of("A", ".", ".", ".", "."), progress.getHint());
+        assertEquals(List.of(), progress.getMark());
     }
 
     @Test
@@ -183,8 +183,8 @@ class GameServiceTest {
 
         Progress progress = gameService.makeAttempt(1, attempt);
 
-        assertEquals(progress.getHint(), hint);
-        assertEquals(progress.getStatus(), gamestate);
+        assertEquals(hint, progress.getHint());
+        assertEquals(gamestate, progress.getStatus());
     }
 
     @Test
@@ -205,8 +205,8 @@ class GameServiceTest {
 
         Progress progress = gameService.makeAttempt(1, "POORTEN");
 
-        assertEquals(progress.getStatus(), PLAYING);
-        assertEquals(progress.getMark(), List.of(INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID));
+        assertEquals(PLAYING, progress.getStatus());
+        assertEquals(List.of(INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID), progress.getMark());
 
     }
 

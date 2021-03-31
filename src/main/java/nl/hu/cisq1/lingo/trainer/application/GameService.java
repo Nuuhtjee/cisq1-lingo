@@ -28,7 +28,6 @@ public class GameService {
     public Progress startNewGame(){
         LingoGame lingoGame = new LingoGame();
 
-        System.out.println("game" + lingoGame.getId());
         int wordLength = lingoGame.provideNextWordLength();
 
         String word = wordService.provideRandomWord(wordLength);

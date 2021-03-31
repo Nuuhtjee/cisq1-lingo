@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
+import nl.hu.cisq1.lingo.trainer.domain.enums.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -8,7 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.*;
+import static nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate.*;
 
 @Entity
 @Table(name="game")

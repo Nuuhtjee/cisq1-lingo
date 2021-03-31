@@ -133,19 +133,4 @@ class LingoGameTest {
         LingoGame lingoGame = new LingoGame();
         assertFalse(lingoGame.isPlayerEliminated());
     }
-
-//    @Test
-//    @DisplayName("Progress should not be updated if word is not guessed")
-//    void showProgress(){
-//        LingoGame lingoGame = new LingoGame();
-//
-//        Progress oldProgress = lingoGame.showProgress();
-//
-//        lingoGame.startNewRound("APPEL");
-//
-//        lingoGame.makeAttempt("PAARD");
-//
-//        assertEquals(lingoGame.showProgress(),oldProgress);
-//
-//    }
 }
