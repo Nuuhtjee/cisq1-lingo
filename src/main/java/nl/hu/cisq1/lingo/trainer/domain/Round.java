@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidAttemptException;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class Round {
 
     @OneToMany
     @JoinColumn
+    @Cascade(CascadeType.ALL)
     private List<Feedback> attempts = new ArrayList<>();
 
     public Round(String wordToGuess){

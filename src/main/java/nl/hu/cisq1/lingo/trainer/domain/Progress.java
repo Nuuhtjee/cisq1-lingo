@@ -16,7 +16,7 @@ public class Progress {
     private int score;
 
     @Enumerated(EnumType.STRING)
-    private GameStatus status;
+    private Gamestate status;
 
     @ElementCollection
     private List<String> hint;
@@ -41,12 +41,12 @@ public class Progress {
 
     }
 
-    public void updateProgress(int roundNumber, List<String> hint, int pogingen, GameStatus gameStatus){
+    public void updateProgress(int roundNumber, List<String> hint, int pogingen, Gamestate gamestate){
         this.roundNumber = roundNumber;
         this.hint = hint;
         int calcScore = 5 * (5 - pogingen) + 5;
         this.score += calcScore;
-        this.status = gameStatus;
+        this.status = gamestate;
     }
 
     public void setHint(List<String> hint){
@@ -70,7 +70,11 @@ public class Progress {
         return hint;
     }
 
-    public GameStatus getStatus() {
+    public int getGameid() {
+        return gameid;
+    }
+
+    public Gamestate getStatus() {
         return status;
     }
 

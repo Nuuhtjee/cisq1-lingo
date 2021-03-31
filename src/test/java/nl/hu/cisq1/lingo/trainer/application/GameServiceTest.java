@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.application;
 
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
-import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
+import nl.hu.cisq1.lingo.trainer.domain.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.LingoGame;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
@@ -17,9 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static nl.hu.cisq1.lingo.trainer.domain.GameStatus.*;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.*;
-import static nl.hu.cisq1.lingo.trainer.domain.Mark.ABSENT;
+import static nl.hu.cisq1.lingo.trainer.domain.Gamestate.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -132,7 +130,7 @@ class GameServiceTest {
     @ParameterizedTest
     @MethodSource("provideAttemptExamples")
     @DisplayName("Make attempt on existing game")
-    void makeAttempt(String woord, GameStatus gameStatus, String attempt, List<String> hint){
+    void makeAttempt(String woord, Gamestate gamestate, String attempt, List<String> hint){
         SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
 
         WordService wordService = mock(WordService.class);
@@ -149,7 +147,7 @@ class GameServiceTest {
         Progress progress = gameService.makeAttempt(1,attempt);
 
         assertEquals(progress.getHint(),hint);
-        assertEquals(progress.getStatus(),gameStatus);
+        assertEquals(progress.getStatus(), gamestate);
     }
 
     @Test
