@@ -4,7 +4,6 @@ import com.jayway.jsonpath.JsonPath;
 import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.LingoGame;
-import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ class GameControllerIntegrationTest {
 
     private int gameidWithoutRound;
 
-    @BeforeEach
+    @BeforeEach //TODO dit kan een beforeAll zijn misschien sinds er toch voor elke test case is nagedacht
     public void init() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/game/startgame");
@@ -60,7 +59,7 @@ class GameControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.score").isNumber())
                 .andExpect(jsonPath("$.score").value(0))
-                .andExpect(jsonPath("$.status").value(Gamestate.PLAYING.toString()))
+                .andExpect(jsonPath("$.status").value("PLAYING"))
                 .andExpect(jsonPath("$.hint").isArray())
                 .andExpect(jsonPath("$.mark").isArray())
                 .andExpect(jsonPath("$.roundNumber").isNumber())

@@ -50,31 +50,31 @@ class GameServiceIntegrationTest {
 
     @Test
     @DisplayName("Makes a guess on a game with no started rounds")
-    void makeAttemptWithNoRound(){
+    void makeAttemptWithNoRound() {
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(new LingoGame()));
 
-        assertThrows(InvalidRoundException.class, () -> gameService.makeAttempt(1,"PAARD"));
+        assertThrows(InvalidRoundException.class, () -> gameService.makeAttempt(1, "PAARD"));
     }
 
     @Test
     @DisplayName("Makes a guess on an unavailable game")
-    void makeAttemptWithNoGame(){
+    void makeAttemptWithNoGame() {
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(NoGameFoundException.class, () -> gameService.makeAttempt(1,"PAARD"));
+        assertThrows(NoGameFoundException.class, () -> gameService.makeAttempt(1, "PAARD"));
     }
 
     @ParameterizedTest
     @MethodSource("provideAttemptExamples")
     @DisplayName("Makes a guess on a game")
-    void makeAttempt(String word, Gamestate gamestate, String attempt, List<String> hint){
+    void makeAttempt(String word, Gamestate gamestate, String attempt, List<String> hint) {
         LingoGame lingoGame = new LingoGame();
 
         lingoGame.startNewRound(word);
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(lingoGame));
 
-        Progress progress1 = gameService.makeAttempt(1,attempt);
+        Progress progress1 = gameService.makeAttempt(1, attempt);
 
         assertEquals(hint, progress1.getHint());
         assertEquals(gamestate, progress1.getStatus());
@@ -82,16 +82,16 @@ class GameServiceIntegrationTest {
 
     @Test
     @DisplayName("Makes an invalid guess on a game")
-    void makeInvalidAttempt(){
+    void makeInvalidAttempt() {
         LingoGame lingoGame = new LingoGame();
 
         lingoGame.startNewRound("Paard");
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(lingoGame));
 
-        Progress progress1 = gameService.makeAttempt(1,"TRAINER");
+        Progress progress1 = gameService.makeAttempt(1, "TRAINER");
 
         assertEquals(PLAYING, progress1.getStatus());
-        assertEquals(List.of(INVALID,INVALID,INVALID,INVALID,INVALID,INVALID,INVALID), progress1.getMark());
+        assertEquals(List.of(INVALID, INVALID, INVALID, INVALID, INVALID, INVALID, INVALID), progress1.getMark());
     }
 }
