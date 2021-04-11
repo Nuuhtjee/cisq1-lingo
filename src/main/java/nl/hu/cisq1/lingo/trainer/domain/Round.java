@@ -54,29 +54,28 @@ public class Round {
                     attemptList[i] = ".";
                 }
             }
+
             for (int i = 0; i < attemptList.length; i++) {
                 if (wordList[i].equals(".")){
                     result.add(CORRECT);
                 }
                 else{
-                    if (!wordList[i].equals(attemptList[i])) {
-                        List<String> subarr = Arrays.asList(attemptList).subList(0,i + 1);
-                        if (Arrays.asList(wordList).contains(attemptList[i])) {
-                            String letter = attemptList[i];
-                            int amountOfLetterInAttempt = (int) subarr.stream().filter(item -> item.equals(letter)).count();
-                            int amountOfLetterInWord = (int) Arrays.stream(wordList).filter(item -> item.equals(letter)).count();
+                    List<String> subarr = Arrays.asList(attemptList).subList(0,i + 1);
+                    if (Arrays.asList(wordList).contains(attemptList[i])) {
+                        String letter = attemptList[i];
+                        int amountOfLetterInAttempt = (int) subarr.stream().filter(item -> item.equals(letter)).count();
+                        int amountOfLetterInWord = (int) Arrays.stream(wordList).filter(item -> item.equals(letter)).count();
 
-                            if (amountOfLetterInAttempt > amountOfLetterInWord){
-                                result.add(ABSENT);
-                            }
-                            else {
-                                result.add(PRESENT);
-                            }
-
-                        }
-                        else{
+                        if (amountOfLetterInAttempt > amountOfLetterInWord){
                             result.add(ABSENT);
                         }
+                        else {
+                            result.add(PRESENT);
+                        }
+
+                    }
+                    else{
+                        result.add(ABSENT);
                     }
                 }
             }
@@ -120,7 +119,7 @@ public class Round {
 
 
     public void playRound(String attempt) throws InvalidAttemptException{
-        if (!roundDone && attempts.size() != 5){
+        if (!roundDone){
             this.makeAttempt(attempt);
             roundDone = checkRound();
 

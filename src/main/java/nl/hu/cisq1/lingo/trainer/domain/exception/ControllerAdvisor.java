@@ -12,26 +12,6 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(InvalidAttemptException.class)
-    public ResponseEntity<Object> handleInvalidAttemptException(){
-        Map<String,Object> body = new LinkedHashMap<>();
-
-        body.put("message","Attempt is invalid");
-        body.put("status code", HttpStatus.BAD_REQUEST.toString());
-
-        return new ResponseEntity<>(body,HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(InvalidFeedbackException.class)
-    public ResponseEntity<Object> handleInvalidFeedbackException(){
-        Map<String,Object> body = new LinkedHashMap<>();
-
-        body.put("message","Feedback is invalid");
-        body.put("status code", HttpStatus.BAD_REQUEST.toString());
-
-        return new ResponseEntity<>(body,HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(InvalidRoundException.class)
     public ResponseEntity<Object> handleInvalidRoundException(){
         Map<String,Object> body = new LinkedHashMap<>();

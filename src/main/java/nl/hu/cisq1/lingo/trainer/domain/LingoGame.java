@@ -114,16 +114,12 @@ public class LingoGame {
     }
 
     public List<String> getLastHint(){
-        List<String> result = new ArrayList<>();
-        if (!rounds.isEmpty()){
-            result = rounds.get(rounds.size() - 1).giveHint();
-        }
-        return result;
+        return rounds.get(rounds.size() - 1).giveHint();
     }
 
     public List<Mark> getLastMark(){
         List<Mark> result = new ArrayList<>();
-        if (!rounds.isEmpty() && !rounds.get(rounds.size() - 1).getAttempts().isEmpty()){
+        if (!rounds.get(rounds.size() - 1).getAttempts().isEmpty()){
             Round lastRound = rounds.get(rounds.size() - 1);
             Feedback lastFeedback = lastRound.getAttempts().get(lastRound.getAttempts().size() -1);
             result = lastFeedback.getMarks();
@@ -133,12 +129,8 @@ public class LingoGame {
 
     public List<String> getPreviousAttempts(){
         List<String> result = new ArrayList<>();
-        if (!rounds.isEmpty() && !rounds.get(rounds.size() - 1).getAttempts().isEmpty()){
-            Round lastRound = rounds.get(rounds.size() - 1);
-            lastRound.getAttempts().stream().forEach(attempt -> {
-                result.add(attempt.getAttempt());
-            });
-        }
+        Round lastRound = rounds.get(rounds.size() - 1);
+        lastRound.getAttempts().forEach(attempt ->result.add(attempt.getAttempt()));
         return result;
     }
 }

@@ -59,7 +59,6 @@ public class GameService {
     }
 
     private Progress createProgress(LingoGame game){
-
         return new Progress(
                 game.getId(),
                 game.getScore(),
