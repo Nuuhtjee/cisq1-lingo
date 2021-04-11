@@ -7,7 +7,7 @@
 
 
 
-#Extra uitdagingen:
+# Extra uitdagingen:
 
 **Heroku**
 [Heroku met continuous deployment](https://cisq1-lingo.herokuapp.com/)
