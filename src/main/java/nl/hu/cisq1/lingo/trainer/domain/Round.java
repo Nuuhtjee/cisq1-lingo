@@ -67,7 +67,7 @@ public class Round {
                         int amountOfLetterInWord = (int) Arrays.stream(wordList).filter(item -> item.equals(letter)).count();
 
                         if (amountOfLetterInAttempt > amountOfLetterInWord){
-                            result.add(ABSENT);
+                            result.add(ABSENT); 
                         }
                         else {
                             result.add(PRESENT);
