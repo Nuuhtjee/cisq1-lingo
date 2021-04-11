@@ -7,6 +7,7 @@ import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.exception.InvalidRoundException;
 import nl.hu.cisq1.lingo.trainer.domain.exception.NoGameFoundException;
 import nl.hu.cisq1.lingo.words.application.WordService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -30,22 +31,28 @@ class GameServiceTest {
 
     static Stream<Arguments> provideAttemptExamples() {
         return Stream.of(
-                Arguments.of("PAARD", PLAYING, "PALET", List.of("P", "A", ".", ".", ".")),
-                Arguments.of("HOOFD", PLAYING, "HOREN", List.of("H", "O", ".", ".", ".")),
-                Arguments.of("APPEL", PLAYING, "WATER", List.of("A", ".", ".", "E", ".")),
-                Arguments.of("BAARD", WAITING_FOR_ROUND, "BAARD", List.of("B", "A", "A", "R", "D"))
+                Arguments.of("PAARD", "PALET", PLAYING, List.of("P", "A", ".", ".", ".")),
+                Arguments.of("HOOFD", "HOREN", PLAYING, List.of("H", "O", ".", ".", ".")),
+                Arguments.of("APPEL", "WATER", PLAYING, List.of("A", ".", ".", "E", ".")),
+                Arguments.of("BAARD", "BAARD", WAITING_FOR_ROUND, List.of("B", "A", "A", "R", "D"))
         );
+    }
+
+    private WordService wordService;
+    private SpringGameRepository springGameRepository;
+    private GameService gameService;
+
+    @BeforeEach
+    void init(){
+        springGameRepository = mock(SpringGameRepository.class);
+        wordService = mock(WordService.class);
+
+        gameService = new GameService(springGameRepository, wordService);
     }
 
     @Test
     @DisplayName("Get game by id")
     void getGame() {
-
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
-
         LingoGame lingoGame = new LingoGame();
         lingoGame.startNewRound("APPEL");
 
@@ -62,11 +69,6 @@ class GameServiceTest {
     @DisplayName("Get game by invalid id")
     void getGameInvalidId() {
 
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
-
         LingoGame lingoGame = new LingoGame();
         lingoGame.startNewRound("APPEL");
 
@@ -82,11 +84,6 @@ class GameServiceTest {
     @DisplayName("Start new game")
     void startNewGame() {
 
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
-
         when(wordService.provideRandomWord(anyInt())).thenReturn("APPEL");
         Progress progress = gameService.startNewGame();
 
@@ -97,11 +94,6 @@ class GameServiceTest {
     @Test
     @DisplayName("Start new round")
     void startNewRound() {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(new LingoGame()));
 
@@ -117,12 +109,6 @@ class GameServiceTest {
     @DisplayName("Start new round with no available game")
     void startNewRoundNoGame() {
 
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
-
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         when(wordService.provideRandomWord(anyInt())).thenReturn("PAARD");
@@ -132,11 +118,6 @@ class GameServiceTest {
     @Test
     @DisplayName("Start multiple rounds")
     void startMultipleRoundsWithGame() {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(new LingoGame()));
 
@@ -150,11 +131,6 @@ class GameServiceTest {
     @Test
     @DisplayName("Make attempt on non existing game")
     void makeAttemptNoGame() {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.empty());
 
@@ -167,12 +143,7 @@ class GameServiceTest {
     @ParameterizedTest
     @MethodSource("provideAttemptExamples")
     @DisplayName("Make attempt on existing game")
-    void makeAttempt(String woord, Gamestate gamestate, String attempt, List<String> hint) {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
+    void makeAttempt(String woord, String attempt, Gamestate gamestate, List<String> hint) {
 
         when(wordService.provideRandomWord(anyInt())).thenReturn("BAARD");
 
@@ -190,11 +161,6 @@ class GameServiceTest {
     @Test
     @DisplayName("Make invalid attempt")
     void makeInvalidAttempt() {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
 
         when(wordService.provideRandomWord(anyInt())).thenReturn("BAARD");
 
@@ -213,11 +179,6 @@ class GameServiceTest {
     @Test
     @DisplayName("Make attempt on non existing round")
     void makeAttemptNoRound() {
-        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-
-        WordService wordService = mock(WordService.class);
-
-        GameService gameService = new GameService(springGameRepository, wordService);
 
         when(springGameRepository.findById(anyInt())).thenReturn(Optional.of(new LingoGame()));
 

@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import nl.hu.cisq1.lingo.trainer.domain.enums.Gamestate;
 import nl.hu.cisq1.lingo.trainer.domain.enums.Mark;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Progress {
@@ -20,13 +21,16 @@ public class Progress {
 
     private int roundNumber;
 
-    public Progress(int gameid, int score, Gamestate status, List<String> hint, List<Mark> mark, int roundNumber) {
+    private List<String> previousAttempts = new ArrayList<>();
+
+    public Progress(int gameid, int score, Gamestate status, List<String> hint, List<Mark> mark, int roundNumber, List<String> previousAttempts) {
         this.gameid = gameid;
         this.score = score;
         this.status = status;
         this.hint = hint;
         this.mark = mark;
         this.roundNumber = roundNumber;
+        this.previousAttempts = previousAttempts;
     }
 
     public int getGameid() {
@@ -51,5 +55,9 @@ public class Progress {
 
     public int getRoundNumber() {
         return roundNumber;
+    }
+
+    public List<String> getPreviousAttempts() {
+        return previousAttempts;
     }
 }

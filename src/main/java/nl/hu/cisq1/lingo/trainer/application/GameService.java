@@ -66,7 +66,8 @@ public class GameService {
                 game.getGamestate(),
                 game.getLastHint(),
                 game.getLastMark(),
-                game.getRounds().size()
+                game.getRounds().size(),
+                game.getPreviousAttempts()
         );
     }
 

@@ -25,7 +25,7 @@ class LingoGameTest {
         return Stream.of(
                 Arguments.of("paard", 6),
                 Arguments.of("appels", 7),
-                Arguments.of("familie",5)
+                Arguments.of("familie", 5)
         );
     }
 
@@ -49,7 +49,7 @@ class LingoGameTest {
     }
 
     @Test
-    @DisplayName("Throws exception if there is still an ongoing round")
+    @DisplayName("Throws exception if there is an ongoing round")
     void startInvalidNewRound(){
         LingoGame lingoGame = new LingoGame();
 
@@ -121,9 +121,6 @@ class LingoGameTest {
         lingoGame.makeAttempt(attempts.get(3));
         lingoGame.makeAttempt(attempts.get(4));
 
-
-
-
         assertEquals(expectedResult, lingoGame.isPlayerEliminated());
     }
 
@@ -131,6 +128,7 @@ class LingoGameTest {
     @DisplayName("Checks if player is eliminated without there being a round")
     void isPlayerEliminatedWithoutRound(){
         LingoGame lingoGame = new LingoGame();
+
         assertFalse(lingoGame.isPlayerEliminated());
     }
 }

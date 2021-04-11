@@ -56,7 +56,6 @@ public class LingoGame {
     public void makeAttempt(String attempt) throws InvalidRoundException {
         if (gamestate == PLAYING) {
             Round round = rounds.get(rounds.size() - 1);
-
             round.playRound(attempt);
             isPlayerEliminated();
             if (round.wordGuessed()) {
@@ -128,6 +127,17 @@ public class LingoGame {
             Round lastRound = rounds.get(rounds.size() - 1);
             Feedback lastFeedback = lastRound.getAttempts().get(lastRound.getAttempts().size() -1);
             result = lastFeedback.getMarks();
+        }
+        return result;
+    }
+
+    public List<String> getPreviousAttempts(){
+        List<String> result = new ArrayList<>();
+        if (!rounds.isEmpty() && !rounds.get(rounds.size() - 1).getAttempts().isEmpty()){
+            Round lastRound = rounds.get(rounds.size() - 1);
+            lastRound.getAttempts().stream().forEach(attempt -> {
+                result.add(attempt.getAttempt());
+            });
         }
         return result;
     }

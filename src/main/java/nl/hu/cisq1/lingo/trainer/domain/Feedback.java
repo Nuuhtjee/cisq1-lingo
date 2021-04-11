@@ -55,10 +55,10 @@ public class Feedback {
             throw new InvalidFeedbackException();
         }
         for (int i = 0; i < listLetters.length; i++){
-            if (marks.get(i) == CORRECT){
+            if (marks.size() == listLetters.length && marks.get(i) == CORRECT){
                 result.add(listLetters[i]);
             }
-            else if (marks.get(i) != CORRECT){
+            else{
                 result.add(previousHint.get(i));
             }
         }

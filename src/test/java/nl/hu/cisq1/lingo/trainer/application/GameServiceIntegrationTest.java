@@ -41,10 +41,10 @@ class GameServiceIntegrationTest {
 
     static Stream<Arguments> provideAttemptExamples() {
         return Stream.of(
-                Arguments.of("PAARD", PLAYING, "PALET", List.of("P", "A", ".", ".", ".")),
-                Arguments.of("HOOFD", PLAYING, "HOREN", List.of("H", "O", ".", ".", ".")),
-                Arguments.of("APPEL", PLAYING, "WATER", List.of("A", ".", ".", "E", ".")),
-                Arguments.of("BAARD", WAITING_FOR_ROUND, "BAARD", List.of("B", "A", "A", "R", "D"))
+                Arguments.of("PAARD", "PALET", PLAYING, List.of("P", "A", ".", ".", ".")),
+                Arguments.of("HOOFD", "HOREN", PLAYING, List.of("H", "O", ".", ".", ".")),
+                Arguments.of("APPEL", "WATER", PLAYING, List.of("A", ".", ".", "E", ".")),
+                Arguments.of("BAARD", "BAARD", WAITING_FOR_ROUND, List.of("B", "A", "A", "R", "D"))
         );
     }
 
@@ -67,7 +67,7 @@ class GameServiceIntegrationTest {
     @ParameterizedTest
     @MethodSource("provideAttemptExamples")
     @DisplayName("Makes a guess on a game")
-    void makeAttempt(String word, Gamestate gamestate, String attempt, List<String> hint) {
+    void makeAttempt(String word, String attempt, Gamestate gamestate, List<String> hint) {
         LingoGame lingoGame = new LingoGame();
 
         lingoGame.startNewRound(word);

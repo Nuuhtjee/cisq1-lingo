@@ -83,6 +83,7 @@ public class Round {
         }
         Feedback feedback = new Feedback(attempt,result);
         attempts.add(feedback);
+
         return result;
     }
 
@@ -118,11 +119,10 @@ public class Round {
 
 
 
-    public List<Mark> playRound(String attempt) throws InvalidAttemptException{
+    public void playRound(String attempt) throws InvalidAttemptException{
         if (!roundDone && attempts.size() != 5){
-            List<Mark> marks = this.makeAttempt(attempt);
+            this.makeAttempt(attempt);
             roundDone = checkRound();
-            return marks;
 
         }
         else{

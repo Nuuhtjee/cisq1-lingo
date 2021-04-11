@@ -22,6 +22,7 @@ class RoundTest {
                 Arguments.of("WOORD","WOONT",List.of(CORRECT,CORRECT,CORRECT,ABSENT,ABSENT)),
                 Arguments.of("WOORD","WAGON",List.of(CORRECT,ABSENT,ABSENT,PRESENT,ABSENT)),
                 Arguments.of("WOORD","WAKKER",List.of(INVALID,INVALID,INVALID,INVALID,INVALID,INVALID)),
+                Arguments.of("WOORD","WAAK",List.of(INVALID,INVALID,INVALID,INVALID)),
                 Arguments.of("WATER","AAPJE",List.of(ABSENT,CORRECT,ABSENT,ABSENT,PRESENT)),
                 Arguments.of("PAARD","ATTAA",List.of(PRESENT,ABSENT,ABSENT,PRESENT,ABSENT)),
                 Arguments.of("PAARD","TATAA",List.of(ABSENT,CORRECT,ABSENT,PRESENT,ABSENT)),
